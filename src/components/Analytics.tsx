@@ -124,7 +124,7 @@ export function Analytics() {
       </div>
 
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList>
+        <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="performance">Performance</TabsTrigger>
           <TabsTrigger value="progress">Progress</TabsTrigger>

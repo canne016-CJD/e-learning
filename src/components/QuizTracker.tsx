@@ -222,16 +222,16 @@ export function QuizTracker() {
       {activeQuiz?.isActive && (
         <Card className="border-2 border-blue-500 bg-blue-50">
           <CardHeader>
-            <div className="flex items-start justify-between">
+            <div className="flex flex-col sm:flex-row items-start justify-between gap-3">
               <div className="flex-1">
-                <CardTitle className="text-xl font-bold">
+                <CardTitle>
                   {activeQuiz.title}
                 </CardTitle>
-                <p className="text-gray-600 mt-1">Questions Answered: {activeQuiz.answeredQuestions}/{activeQuiz.totalQuestions}</p>
+                <p className="text-gray-600 mt-1 text-sm sm:text-base">Questions Answered: {activeQuiz.answeredQuestions}/{activeQuiz.totalQuestions}</p>
               </div>
-              <div className="text-right">
+              <div className="text-left sm:text-right w-full sm:w-auto">
                 <p className="text-xl font-bold text-black">{formatTime(timeRemaining)}</p>
-                <p className="text-gray-600">Time Remaining</p>
+                <p className="text-gray-600 text-sm">Time Remaining</p>
               </div>
             </div>
           </CardHeader>
@@ -248,7 +248,7 @@ export function QuizTracker() {
               />
             </div>
             
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <Button variant="outline" className="flex-1 text-black hover:bg-black hover:text-white">
                 Pause Quiz
               </Button>
@@ -262,10 +262,10 @@ export function QuizTracker() {
 
       {/* Quiz Selection */}
       <Tabs defaultValue="available" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="available" className="data-[state=active]:bg-black data-[state=active]:text-white">Available Quizzes</TabsTrigger>
-          <TabsTrigger value="completed">Completed</TabsTrigger>
-          <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="available" className="data-[state=active]:bg-black data-[state=active]:text-white text-xs sm:text-sm">Available</TabsTrigger>
+          <TabsTrigger value="completed" className="text-xs sm:text-sm">Completed</TabsTrigger>
+          <TabsTrigger value="upcoming" className="text-xs sm:text-sm">Upcoming</TabsTrigger>
         </TabsList>
         
         <TabsContent value="available" className="space-y-4">

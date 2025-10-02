@@ -17,11 +17,11 @@ function SettingsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold">Settings</h2>
+        <h2>Settings</h2>
         <p className="text-gray-600">Manage your account settings and preferences.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -113,6 +113,7 @@ function SettingsPage() {
 }
 
 export default function App() {
+  // On mobile, sidebar starts closed; on desktop, it starts open
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
 
@@ -133,10 +134,19 @@ export default function App() {
     }
   };
 
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+    // Close sidebar on mobile when navigating
+    if (window.innerWidth < 768) {
+      setSidebarOpen(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Fixed Header */}
       <div className={`fixed top-0 right-0 left-0 z-30 transition-all duration-200 ${sidebarOpen ? 'md:ml-64' : 'md:ml-16'}`}>
-        <Header />
+        <Header onMobileMenuClick={() => setSidebarOpen(!sidebarOpen)} />
       </div>
       
       <div className="flex pt-16">
@@ -144,10 +154,11 @@ export default function App() {
           isOpen={sidebarOpen}
           onToggle={() => setSidebarOpen(!sidebarOpen)}
           activeTab={activeTab}
-          onTabChange={setActiveTab}
+          onTabChange={handleTabChange}
         />
         
-        <main className={`flex-1 p-6 transition-all duration-200 ${sidebarOpen ? 'md:ml-64' : 'md:ml-16'}`}>
+        {/* Main Content - No margin on mobile, margin on desktop */}
+        <main className={`flex-1 p-4 md:p-6 transition-all duration-200 ${sidebarOpen ? 'md:ml-64' : 'md:ml-16'} w-full`}>
           <div className="max-w-7xl mx-auto">
             {renderContent()}
           </div>

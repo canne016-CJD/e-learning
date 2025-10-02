@@ -113,8 +113,8 @@ export function Dashboard() {
             </CardHeader>
             <CardContent className="space-y-4">
               {recentCourses.map((course) => (
-                <div key={course.id} className="flex items-center space-x-4 p-4 border rounded-lg hover:bg-gray-50 transition-colors">
-                  <div className="relative">
+                <div key={course.id} className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                  <div className="relative flex-shrink-0">
                     <ImageWithFallback
                       src={course.thumbnail}
                       alt={course.title}
@@ -126,18 +126,18 @@ export function Dashboard() {
                       <PlayCircle className="h-6 w-6 text-white" />
                     </div>
                   </div>
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center justify-between">
+                  <div className="flex-1 space-y-2 w-full">
+                    <div className="flex items-center justify-between gap-2">
                       <h3 className="font-medium">{course.title}</h3>
-                      <Badge variant="secondary">{course.progress}%</Badge>
+                      <Badge variant="secondary" className="flex-shrink-0">{course.progress}%</Badge>
                     </div>
                     <p className="text-sm text-gray-600">By {course.instructor}</p>
-                    <div className="flex items-center justify-between text-sm text-gray-500">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-gray-500">
                       <span>{course.completedLessons}/{course.totalLessons} lessons</span>
-                      <Progress value={course.progress} className="w-24 h-2" />
+                      <Progress value={course.progress} className="w-full sm:w-24 h-2" />
                     </div>
                   </div>
-                  <Button size="sm">Continue</Button>
+                  <Button size="sm" className="w-full sm:w-auto">Continue</Button>
                 </div>
               ))}
             </CardContent>

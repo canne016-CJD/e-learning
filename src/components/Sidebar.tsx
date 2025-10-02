@@ -20,14 +20,24 @@ const navigationItems = [
 export function Sidebar({ isOpen, onToggle, activeTab, onTabChange }: SidebarProps) {
   return (
     <>
+      {/* Mobile Backdrop */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          onClick={onToggle}
+        />
+      )}
+
       {/* Sidebar */}
       <aside className={cn(
         "fixed left-0 top-0 h-full bg-white border-r border-gray-200 z-40 transition-all duration-200 ease-in-out",
-        isOpen ? "w-64" : "w-16"
+        // Mobile: slide in/out from left, Desktop: expand/collapse
+        "md:translate-x-0",
+        isOpen ? "translate-x-0 w-64" : "-translate-x-full w-64 md:translate-x-0 md:w-16"
       )}>
-        {/* Logo Section */}
+        {/* Logo Section - Hidden on mobile, visible on desktop */}
         <div className={cn(
-          "p-4 border-b border-gray-200 flex items-center transition-all duration-200",
+          "p-4 border-b border-gray-200 items-center transition-all duration-200 hidden md:flex",
           isOpen ? "justify-between" : "justify-center flex-col gap-2"
         )}>
           <div className="flex items-center gap-2">
@@ -50,6 +60,16 @@ export function Sidebar({ isOpen, onToggle, activeTab, onTabChange }: SidebarPro
           </Button>
         </div>
 
+        {/* Mobile Logo Section - Visible only on mobile */}
+        <div className="p-4 border-b border-gray-200 flex items-center justify-between md:hidden">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <span className="text-white text-sm font-bold">KL</span>
+            </div>
+            <h1 className="text-xl font-bold text-gray-900">KodeigoLearn</h1>
+          </div>
+        </div>
+
         {/* Navigation */}
         <nav className="p-4 space-y-2">
           {navigationItems.map((item) => {
@@ -59,8 +79,9 @@ export function Sidebar({ isOpen, onToggle, activeTab, onTabChange }: SidebarPro
                 key={item.id}
                 variant={activeTab === item.id ? "secondary" : "ghost"}
                 className={cn(
-                  "w-full h-10 transition-all duration-200",
-                  isOpen ? "justify-start gap-3 px-3" : "justify-center px-0",
+                  "w-full h-10 transition-all duration-200 justify-start gap-3 px-3",
+                  "md:px-3",
+                  !isOpen && "md:justify-center md:px-0",
                   activeTab === item.id && "bg-blue-50 text-blue-700 border-blue-200"
                 )}
                 onClick={() => {
@@ -69,7 +90,7 @@ export function Sidebar({ isOpen, onToggle, activeTab, onTabChange }: SidebarPro
                 title={!isOpen ? item.label : undefined}
               >
                 <Icon className="h-4 w-4 flex-shrink-0" />
-                {isOpen && <span>{item.label}</span>}
+                <span className={cn("md:inline", !isOpen && "md:hidden")}>{item.label}</span>
               </Button>
             );
           })}
